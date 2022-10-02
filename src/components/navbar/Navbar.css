@@ -1,0 +1,32 @@
+.background {
+    background-color: #4E1355;
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    object-fit: contain;
+}
+
+.img {
+    margin-left: 20px;
+    margin-top: 10px;
+
+}
+
+.nav-menu {
+    padding: 20px;
+    color: white;
+    position: relative;
+}
+
+.button {
+    color: white;
+    font-weight: bold;
+
+}
+
+.pseudo{
+    color: white;
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: large;
+}
