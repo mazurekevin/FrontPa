@@ -89,7 +89,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
     function createSave(){
         Axios.post("http://localhost:8081/api/SavePosts", {
-            myPseudo : username,
+            myPseudo : JSON.parse(user).username,
             name : username,
             code: userCode,
             language: userLang,
