@@ -45,7 +45,7 @@ const style = {
   p: 4,
 };
 
-function Post({username,caption,comments,code,language,like,id,originName,savePostId,myPseudo,setpost}) {
+function Post({username,caption,comments,code,language,like,id,originName,savePostId,myPseudo,originId,setpost}) {
     const user = window.localStorage.getItem("currentUser");
     const [contentLanguage,setContentLanguage] = useState("");
     const handleLike = () => {
@@ -213,7 +213,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
             }
             {myPseudo!==undefined ?(
                 <div>
-                    <Button onClick={goToAddPost}>Update</Button>
+                    <a href={ `/addPostData/${savePostId}`}>Update</a>
                 </div>
             ):(
                 <div>

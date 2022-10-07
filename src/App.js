@@ -16,6 +16,7 @@ import AlreadyConnectedError from "./components/exception/AlreadyConnectedError"
 import RegisteredSuccessfully from "./components/exception/RegisteredSuccessfully";
 import AddPost from "./components/post/AddPost";
 import SavePost from "./components/savePost/SavePost";
+import AddPostData from "./components/post/AddPostData";
 
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
                               }
           <Route path="/profile/:username" element={<Profile/>} />
           <Route path="/savePost/:username" element={<SavePost/>} />
+          <Route path="/addPostData/:savePostId" element={<AddPostData/>} />
           <Route path="/signout" element={<SignOut/>} />
           <Route path="/addpost" element={<AddPost/>} />
           <Route path="/404" element={<NotFoundError/>}/>

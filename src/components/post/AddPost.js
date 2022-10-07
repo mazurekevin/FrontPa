@@ -48,6 +48,8 @@ function AddPost() {
         setUserCode(editRef.current.getValue());
     }
 
+
+
     const handleUpload = () => {
                         setCaption("");
         console.log(editRef.current.getValue());
@@ -59,7 +61,10 @@ function AddPost() {
                                 name : username,
                                 code: userCode,
                                 language: userLang,
-                                caption: caption, like: 0});
+                                caption: caption,
+                                like: 0,
+                                originName: username,
+                                });
        return goToHome();
     }
 

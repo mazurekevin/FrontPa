@@ -21,7 +21,7 @@ export function goToProfile(username) {
     window.location.href = "/profile/"+ username;
 }
 
-export function goToAddPost() {
+export function goToAddPost(props) {
     window.location.href = "/addpost";
 }
 
