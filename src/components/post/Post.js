@@ -178,6 +178,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     if(code ==""){
         userCode = "# Enter Your Code Here ...";
     }
+    console.log(originId)
     return(
 
         <Card sx={{  marginTop: '20px'}}>
@@ -214,6 +215,16 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
             {myPseudo!==undefined ?(
                 <div>
                     <a href={ `/addPostData/${savePostId}`}>Update</a>
+                </div>
+            ):(
+                <div>
+
+                </div>
+            )
+            }
+            {originId!=="null" ?(
+                <div>
+                    <a href={ `/originalPost/${originId}`}>Show original</a>
                 </div>
             ):(
                 <div>

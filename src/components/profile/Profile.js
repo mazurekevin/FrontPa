@@ -139,7 +139,7 @@ function Profile() {
                             {
                                 posts && posts.map(post => (
 
-                                        <Post username={post.name} language={post.language} caption={post.caption} comments={post.comments} code={post.code} like={post.likeCount} id={post.id} originName={post.originName} />
+                                        <Post username={post.name} language={post.language} caption={post.caption} comments={post.comments} code={post.code} like={post.likeCount} id={post.id}  originId={post.originId} originName={post.originName} />
 
                                     )
                                 )}

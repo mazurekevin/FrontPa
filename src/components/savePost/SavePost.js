@@ -49,7 +49,7 @@ function SavePost() {
                 {
                     posts && posts.map(post => (
 
-                            <Post username={post.name} language={post.language} caption={post.caption} code={post.code} like={post.likeCount} savePostId={post.savePostId} myPseudo={post.myPseudo}/>
+                            <Post username={post.name} language={post.language} caption={post.caption} code={post.code} like={post.likeCount} savePostId={post.savePostId} myPseudo={post.myPseudo} originName={post.originName} originId={post.originId}/>
 
                         )
                     )}

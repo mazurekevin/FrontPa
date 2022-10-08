@@ -46,7 +46,7 @@ function Home(){
                 {
                     posts && posts.map(post => (
 
-                    <Post username={post.name} language={post.language} caption={post.caption} comments={post.comments} code={post.code} like={post.likeCount} id={post.id} originName={post.originName} setpost={setPosts}/>
+                    <Post username={post.name} language={post.language} caption={post.caption} comments={post.comments} code={post.code} like={post.likeCount} id={post.id} originName={post.originName} originId={post.originId} setpost={setPosts}/>
 
                         )
                     )}
