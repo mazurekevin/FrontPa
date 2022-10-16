@@ -17,6 +17,8 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Modal,Backdrop} from '@mui/material';
 
+
+
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -49,7 +51,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     const user = window.localStorage.getItem("currentUser");
     const [contentLanguage,setContentLanguage] = useState("");
     const handleLike = () => {
-        axios.put("http://localhost:8081/api/posts/"+id,{
+        axios.put("http://localhost:8080/api/posts/"+id,{
                 name : username,
                 code: userCode,
                 language: userLang,
@@ -60,7 +62,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
     }
         const handleDisLike = () => {
-            axios.put("http://localhost:8081/api/posts/"+id,{
+            axios.put("http://localhost:8080/api/posts/"+id,{
                     name : username,
                     code: userCode,
                     language: userLang,
@@ -72,7 +74,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
 
     const handleEdit = () => {
-        axios.put("http://localhost:8081/api/posts/"+id,{
+        axios.put("http://localhost:8080/api/posts/"+id,{
         name : username,
         code: userCode,
         language: userLang,
@@ -83,24 +85,37 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     const [comment, setComment] = useState("");
 
     const fetchPosts= async()=>{
-        return await axios.get('http://localhost:8081/api/posts');
+        return await axios.get('http://localhost:8080/api/posts');
 
     }
 
     function createSave(){
-        Axios.post("http://localhost:8081/api/SavePosts", {
-            myPseudo : JSON.parse(user).username,
-            name : username,
-            code: userCode,
-            language: userLang,
-            caption: caption,
-            like: 0,
-            originId: id,
-            originName: originName});
+        if(originId!=null){
+            Axios.post("http://localhost:8080/api/SavePosts", {
+                myPseudo : JSON.parse(user).username,
+                name : username,
+                code: userCode,
+                language: userLang,
+                caption: caption,
+                like: 0,
+                originId: originId,
+                originName: originName});
+        }else{
+            Axios.post("http://localhost:8080/api/SavePosts", {
+                myPseudo : JSON.parse(user).username,
+                name : username,
+                code: userCode,
+                language: userLang,
+                caption: caption,
+                like: 0,
+                originId: id,
+                originName: originName});
+        }
+
     }
 
     function  postComment(){
-         Axios.post("http://localhost:8081/api/posts/"+id+"/comments", {
+         Axios.post("http://localhost:8080/api/posts/"+id+"/comments", {
                                         username : JSON.parse(user).username,
                                         body: comment,
                                         })
@@ -115,9 +130,9 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
     function deletePost(){
         if(myPseudo===undefined){
-            Axios.delete("http://localhost:8081/api/posts/"+id);
+            Axios.delete("http://localhost:8080/api/posts/"+id);
         }else{
-            Axios.delete("http://localhost:8081/api/SavePosts/"+savePostId);
+            Axios.delete("http://localhost:8080/api/SavePosts/"+savePostId);
         }
 
     }
@@ -170,6 +185,9 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
         })
 
     }
+    function save(){
+        console.log('SAVED!')
+    }
 // efface moi le resultat graciac
     function clearOutput() {
         setUserOutput("");
@@ -192,49 +210,55 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
                 (username != JSON.parse(user).username)?
                     (<IconButton aria-label="settings">
-                        { liked? (<Button onClick={handleDisLike}> DisLike </Button>): <Button onClick={handleLike}> Like </Button>}
-                    </IconButton>) : (<IconButton aria-label="settings">
-                                  <Button onClick={() => handleEdit()}> Edit </Button>
-                               </IconButton>)
+                        { liked? (<Button onClick={handleDisLike}> DisLike </Button>)
+                            :
+                            <Button onClick={handleLike}> Like </Button>
+                        }
+                        {originId!=="null" ?(
+                            <div>
+                                <Button href={ `/originalPost/${originId}`}>Show original</Button>
+                            </div>
+                        ):(
+                            <div>
+
+                            </div>
+                        )
+                        }
+                        <Button onClick={()=> createSave()}>save</Button>
+                    </IconButton>)
+                    :
+                    (<IconButton aria-label="settings">
+                        <Button onClick={() => handleEdit()}> Edit </Button>
+                        <Button onClick={()=> createSave()}>save</Button>
+                        <Button onClick={deletePost} className="Button">delete</Button>
+                            {myPseudo!==undefined ?(
+                                <div>
+                                    <Button href={ `/addPostData/${savePostId}`}>Update</Button>
+                                </div>
+                            ):(
+                                    <div>
+
+                                    </div>
+                                )}
+                        {originId!=="null" ?(
+                            <div>
+                                <Button href={ `/originalPost/${originId}`}>Show original</Button>
+                            </div>
+                        ):(
+                            <div>
+
+                            </div>
+                        )
+                        }
+                    </IconButton>)
                 }
 
                 title={<b>{username} / Origin by <a href={ `/profile/${originName}`}>{originName}</a></b>}
                 //title={<b>test{originName}</b>}
             />
-            <button onClick={()=> createSave()}>save</button>
-            {username === JSON.parse(user).username ?(
-                <div>
-                    <button onClick={deletePost} className="Button">delete</button>
-                </div>
-            ):(
-                <div>
-
-                </div>
-            )
-            }
-            {myPseudo!==undefined ?(
-                <div>
-                    <a href={ `/addPostData/${savePostId}`}>Update</a>
-                </div>
-            ):(
-                <div>
-
-                </div>
-            )
-            }
-            {originId!=="null" ?(
-                <div>
-                    <a href={ `/originalPost/${originId}`}>Show original</a>
-                </div>
-            ):(
-                <div>
-
-                </div>
-            )
-            }
             <CardContent >
                 <Typography variant="body2" color="text.secondary">
-                    {caption}
+                    Description: {caption}
                 </Typography>
             </CardContent>
             <div className="App">

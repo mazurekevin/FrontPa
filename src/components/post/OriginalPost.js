@@ -46,7 +46,7 @@ function OriginalPost() {
 
     }*/
     const fetchPosts= async()=>{
-        const postResponse = await axios.get('http://localhost:8081/api/posts/'+name);
+        const postResponse = await axios.get('http://localhost:8080/api/posts/'+name);
         setPosts(postResponse.data);
 
     }

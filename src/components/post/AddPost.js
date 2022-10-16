@@ -57,7 +57,7 @@ function AddPost() {
     }
 
     function postCode(){
-                    Axios.post("http://localhost:8081/api/posts", {
+                    Axios.post("http://localhost:8080/api/posts", {
                                 name : username,
                                 code: userCode,
                                 language: userLang,
@@ -69,7 +69,7 @@ function AddPost() {
     }
 
     function postSaveCode(){
-        Axios.post("http://localhost:8081/api/SavePosts", {
+        Axios.post("http://localhost:8080/api/SavePosts", {
             myPseudo : username,
             name : username,
             code: userCode,

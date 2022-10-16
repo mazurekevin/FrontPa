@@ -59,13 +59,13 @@ function Profile() {
         []);
 
     const fetchPosts= async()=>{
-        const postResponse = await axios.get('http://localhost:8081/api/posts/user/'+name);
+        const postResponse = await axios.get('http://localhost:8080/api/posts/user/'+name);
         setPosts(postResponse.data);
 
     }
 
     const fetchCheckFollow = async()=>{
-         return await axios.post("http://localhost:8081/api/follow/checkFollow",{
+         return await axios.post("http://localhost:8080/api/follow/checkFollow",{
             id : 2,
             followerUserName: JSON.parse(token).username,
             followedUserName: name
@@ -74,18 +74,18 @@ function Profile() {
     }
 
     const fetchFollowed= async()=>{
-        const followedResponse = await axios.get('http://localhost:8081/api/follow/followed/'+name);
+        const followedResponse = await axios.get('http://localhost:8080/api/follow/followed/'+name);
         setFollowed(followedResponse.data);
 
     }
     const fetchFollower= async()=>{
-        const followerResponse = await axios.get('http://localhost:8081/api/follow/follower/'+name);
+        const followerResponse = await axios.get('http://localhost:8080/api/follow/follower/'+name);
         setFollower(followerResponse.data);
 
 
     }
     const fetchUsers = async  ()=>{
-        const userResponse = await axios.get('http://localhost:8081/api/users/getByUsername/'+name);
+        const userResponse = await axios.get('http://localhost:8080/api/users/getByUsername/'+name);
         setUsers(userResponse.data);
 
 
@@ -93,12 +93,12 @@ function Profile() {
     const toggleFunction = async ()=>{
         if(!checkFollow){
             setCheckFollow(!checkFollow);
-            const createFollow = await axios.post("http://localhost:8081/api/follow",{
+            const createFollow = await axios.post("http://localhost:8080/api/follow",{
                 followerUserName: JSON.parse(token).username,
                 followedUserName: name
             });
         }else{
-            await axios.post("http://localhost:8081/api/follow/deleteFollow",{
+            await axios.post("http://localhost:8080/api/follow/deleteFollow",{
                 id : 2,
                 followerUserName: JSON.parse(token).username,
                 followedUserName: name

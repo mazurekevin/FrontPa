@@ -21,12 +21,12 @@ function Home(){
 
 
     const fetchPosts= async()=>{
-        const postResponse = await axios.get('http://localhost:8081/api/posts');
+        const postResponse = await axios.get('http://localhost:8080/api/posts');
         setPosts(postResponse.data);
 
     }
     const fetchUsers=async()=>{
-        const userResponse = await axios.get('http://localhost:8081/api/users');
+        const userResponse = await axios.get('http://localhost:8080/api/users');
         setUsers(userResponse.data);
     }
     return(
