@@ -40,7 +40,7 @@ function SavePost() {
                             </h1>
                         </div>
                     </div>
-                    <button className="text_post"><strong>{posts.length}</strong> posts </button>
+                    <button className="text_post"><strong>{posts.length}</strong> Save posts </button>
 
                 </Card>
             </Grid>

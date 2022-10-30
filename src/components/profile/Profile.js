@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import {useParams} from "react-router-dom";
 import {Modal,Backdrop, Box,styled} from '@mui/material';
+import Button from "@mui/material/Button";
 
 
 const style = {
@@ -123,7 +124,7 @@ function Profile() {
                             </h1>
                         </div>
                         <div className="followButton">
-                            <a href={ `/savePost/${JSON.parse(token).username}`}>Save</a>
+                            <Button className="Button" href={ `/savePost/${JSON.parse(token).username}`}>Save</Button>
                         </div>
                     </div>
 

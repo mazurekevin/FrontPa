@@ -13,6 +13,8 @@ import Navbar_code from "../navbar/Navbar-code";
 import Editor from "@monaco-editor/react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Input from "@material-ui/core/Input";
+import Axios from "axios";
+import user from "../../store/reducers/User";
 
 
 const style = {
@@ -31,6 +33,7 @@ const style = {
 
 function OriginalPost() {
     const [posts, setPosts] = useState ([]);
+    const user = window.localStorage.getItem("currentUser");
     //const [user, setUsers] = useState([]);
     const { originId } = useParams();
     const name = originId;
@@ -50,6 +53,30 @@ function OriginalPost() {
         setPosts(postResponse.data);
 
     }
+    function createSave(){
+        if(originId!=null){
+            Axios.post("http://localhost:8080/api/SavePosts", {
+                myPseudo : JSON.parse(user).username,
+                name : posts.username,
+                code: posts.userCode,
+                language: posts.userLang,
+                caption: posts.caption,
+                like: 0,
+                originId: posts.originId,
+                originName: posts.originName});
+        }else{
+            Axios.post("http://localhost:8080/api/SavePosts", {
+                myPseudo : JSON.parse(user).username,
+                name : posts.username,
+                code: posts.userCode,
+                language: posts.userLang,
+                caption: posts.caption,
+                like: 0,
+                originId: posts.id,
+                originName: posts.originName});
+        }
+
+    }
     return(
         <div className="profile">
             <Grid justifyContent="center" container spacing={2}>
@@ -58,45 +85,33 @@ function OriginalPost() {
                         <div className="divUser">
                             <div className="username">
                                 <h1>
-                                    {posts.name}
+                                    Post Origin
                                 </h1>
                             </div>
                         </div>
-                        <button className="text_post"><strong>{posts.length}</strong> posts </button>
-
                     </Card>
                 </Grid>
                 <Grid item xs={8} sx={{marginTop:"20px"}}>
-                    <a href={ `/profile/${posts.name}`}>
-                        <Avatar sx={{ bgcolor: "#2878EC" }}  aria-label="recipe"/>
-                    </a>
-                    <b>{posts.name} / Origin by <a href={ `/profile/${posts.originName}`}>{posts.originName}</a></b>
-                    {posts.myPseudo!==undefined ?(
-                        <div>
-                            <a href={ `/addPostData/${posts.savePostId}`}>Update</a>
-                        </div>
-                    ):(
-                        <div>
+                    <div className="Blanc">
+                        <a href={ `/profile/${posts.name}`}>
+                            <Avatar sx={{ bgcolor: "#2878EC" }}  aria-label="recipe"/>
+                        </a>
+                        {posts.originId!==null&&
+                            <div>
+                                <Button href={ `/originalPost/${posts.originId}`}>Show original</Button>
+                            </div>
+                        }
+                        <b>{posts.name} / Origin by <a href={ `/profile/${posts.originName}`}>{posts.originName}</a></b>
+                    </div>
+                    <div className="Blanc">
+                        <CardContent >
+                            <Typography variant="body2" color="text.secondary">
 
-                        </div>
-                    )
-                    }
-                    {posts.originId!=="null" ?(
-                        <div>
-                            <a href={ `/originalPost/${posts.originId}`}>Show original</a>
-                        </div>
-                    ):(
-                        <div>
+                                {posts.caption}
 
-                        </div>
-                    )
-                    }
-
-                    <CardContent >
-                        <Typography variant="body2" color="text.secondary">
-                            {posts.caption}
-                        </Typography>
-                    </CardContent>
+                            </Typography>
+                        </CardContent>
+                    </div>
                     <div className="App">
                         <div className="main">
                             <div className="left-container">

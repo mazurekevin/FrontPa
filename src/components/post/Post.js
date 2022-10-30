@@ -3,7 +3,18 @@ import Button from "@material-ui/core/Button";
 import Input from '@material-ui/core/Input';
 import Editor from "@monaco-editor/react";
 import Card from '@mui/material/Card';
-import {CardHeader,CardContent,Box,CardActions,Collapse,Avatar,Typography,FavoriteIcon, ShareIcon} from '@mui/material';
+import {
+    CardHeader,
+    CardContent,
+    Box,
+    CardActions,
+    Collapse,
+    Avatar,
+    Typography,
+    FavoriteIcon,
+    ShareIcon,
+    Alert
+} from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -16,6 +27,7 @@ import  {sendComment} from "../../services/posts.service";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Modal,Backdrop} from '@mui/material';
+
 
 
 
@@ -90,6 +102,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     }
 
     function createSave(){
+        alert("This post has been saved !!! ")
         if(originId!=null){
             Axios.post("http://localhost:8080/api/SavePosts", {
                 myPseudo : JSON.parse(user).username,
@@ -131,8 +144,10 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     function deletePost(){
         if(myPseudo===undefined){
             Axios.delete("http://localhost:8080/api/posts/"+id);
+            window.location.reload(false);
         }else{
             Axios.delete("http://localhost:8080/api/SavePosts/"+savePostId);
+            window.location.reload(false);
         }
 
     }
@@ -196,7 +211,8 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     if(code ==""){
         userCode = "# Enter Your Code Here ...";
     }
-    console.log(originId)
+
+
     return(
 
         <Card sx={{  marginTop: '20px'}}>
@@ -214,48 +230,52 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
                             :
                             <Button onClick={handleLike}> Like </Button>
                         }
-                        {originId!=="null" ?(
+                        {originId!==null&&
                             <div>
                                 <Button href={ `/originalPost/${originId}`}>Show original</Button>
                             </div>
-                        ):(
-                            <div>
-
-                            </div>
-                        )
                         }
-                        <Button onClick={()=> createSave()}>save</Button>
+                        {myPseudo===JSON.parse(user).username &&
+                            <div>
+                                <Button href={ `/addPostData/${savePostId}`}>Update</Button>
+                            </div>
+
+                        }
+                        <Button onClick={()=> createSave() }>save</Button>
+
+
                     </IconButton>)
                     :
                     (<IconButton aria-label="settings">
                         <Button onClick={() => handleEdit()}> Edit </Button>
                         <Button onClick={()=> createSave()}>save</Button>
-                        <Button onClick={deletePost} className="Button">delete</Button>
-                            {myPseudo!==undefined ?(
+                            <div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this post?')) deletePost() } }>
+                                <Button className="Button">delete</Button>
+                            </div>
+
+
+
+                            {originId!==null&&
+                                <div>
+                                    <Button href={ `/originalPost/${originId}`}>Show original</Button>
+                                </div>
+                            }
+                            {myPseudo===JSON.parse(user).username &&
                                 <div>
                                     <Button href={ `/addPostData/${savePostId}`}>Update</Button>
                                 </div>
-                            ):(
-                                    <div>
 
-                                    </div>
-                                )}
-                        {originId!=="null" ?(
-                            <div>
-                                <Button href={ `/originalPost/${originId}`}>Show original</Button>
-                            </div>
-                        ):(
-                            <div>
+                            }
+                    </IconButton>
+                    )
 
-                            </div>
-                        )
-                        }
-                    </IconButton>)
                 }
-
                 title={<b>{username} / Origin by <a href={ `/profile/${originName}`}>{originName}</a></b>}
                 //title={<b>test{originName}</b>}
             />
+
+
+
             <CardContent >
                 <Typography variant="body2" color="text.secondary">
                     Description: {caption}
