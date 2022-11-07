@@ -49,13 +49,13 @@ function OriginalPost() {
 
     }*/
     const fetchPosts= async()=>{
-        const postResponse = await axios.get('http://192.168.1.82:8080/api/posts/'+name);
+        const postResponse = await axios.get('http://141.94.245.122:8081/api/posts/'+name);
         setPosts(postResponse.data);
 
     }
     function createSave(){
         if(originId!=null){
-            Axios.post("http://192.168.1.82:8080/api/SavePosts", {
+            Axios.post("http://141.94.245.122:8081/api/SavePosts", {
                 myPseudo : JSON.parse(user).username,
                 name : posts.username,
                 code: posts.userCode,
@@ -65,7 +65,7 @@ function OriginalPost() {
                 originId: posts.originId,
                 originName: posts.originName});
         }else{
-            Axios.post("http://192.168.1.82:8080/api/SavePosts", {
+            Axios.post("http://141.94.245.122:8081/api/SavePosts", {
                 myPseudo : JSON.parse(user).username,
                 name : posts.username,
                 code: posts.userCode,

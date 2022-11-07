@@ -18,13 +18,13 @@ function SavePost() {
         },
         []);
     const fetchUsers = async  ()=>{
-        const userResponse = await axios.get('http://192.168.1.82:8080/api/users/getByUsername/'+name);
+        const userResponse = await axios.get('http://141.94.245.122:8081/api/users/getByUsername/'+name);
         setUsers(userResponse.data);
 
 
     }
     const fetchPosts= async()=>{
-        const postResponse = await axios.get('http://192.168.1.82:8080/api/SavePosts/user/'+name);
+        const postResponse = await axios.get('http://141.94.245.122:8081/api/SavePosts/user/'+name);
         setPosts(postResponse.data);
 
     }

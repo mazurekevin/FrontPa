@@ -57,7 +57,7 @@ function AddPost() {
     }
 
     function postCode(){
-                    Axios.post("http://192.168.1.82:8080/api/posts", {
+                    Axios.post("http://141.94.245.122:8081/api/posts", {
                                 name : username,
                                 code: userCode,
                                 language: userLang,
@@ -68,8 +68,9 @@ function AddPost() {
        return goToHome();
     }
 
+
     function postSaveCode(){
-        Axios.post("http://192.168.1.82:8080/api/SavePosts", {
+        Axios.post("http://141.94.245.122:8081/api/SavePosts", {
             myPseudo : username,
             name : username,
             code: userCode,

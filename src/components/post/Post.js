@@ -63,7 +63,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     const user = window.localStorage.getItem("currentUser");
     const [contentLanguage,setContentLanguage] = useState("");
     const handleLike = () => {
-        axios.put("http://192.168.1.82:8080/api/posts/"+id,{
+        axios.put("http://141.94.245.122:8081/api/posts/"+id,{
                 name : username,
                 code: userCode,
                 language: userLang,
@@ -74,7 +74,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
     }
         const handleDisLike = () => {
-            axios.put("http://192.168.1.82:8080/api/posts/"+id,{
+            axios.put("http://141.94.245.122:8081/api/posts/"+id,{
                     name : username,
                     code: userCode,
                     language: userLang,
@@ -86,7 +86,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
 
     const handleEdit = () => {
-        axios.put("http://192.168.1.82:8080/api/posts/"+id,{
+        axios.put("http://141.94.245.122:8081/api/posts/"+id,{
         name : username,
         code: userCode,
         language: userLang,
@@ -97,14 +97,14 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     const [comment, setComment] = useState("");
 
     const fetchPosts= async()=>{
-        return await axios.get('http://192.168.1.82:8080/api/posts');
+        return await axios.get('http://141.94.245.122:8081/api/posts');
 
     }
 
     function createSave(){
         alert("This post has been saved !!! ")
         if(originId!=null){
-            Axios.post("http://192.168.1.82:8080/api/SavePosts", {
+            Axios.post("http://141.94.245.122:8081/api/SavePosts", {
                 myPseudo : JSON.parse(user).username,
                 name : username,
                 code: userCode,
@@ -114,7 +114,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
                 originId: originId,
                 originName: originName});
         }else{
-            Axios.post("http://192.168.1.82:8080/api/SavePosts", {
+            Axios.post("http://141.94.245.122:8081/api/SavePosts", {
                 myPseudo : JSON.parse(user).username,
                 name : username,
                 code: userCode,
@@ -128,7 +128,7 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
     }
 
     function  postComment(){
-         Axios.post("http://192.168.1.82:8080/api/posts/"+id+"/comments", {
+         Axios.post("http://141.94.245.122:8081/api/posts/"+id+"/comments", {
                                         username : JSON.parse(user).username,
                                         body: comment,
                                         })
@@ -143,10 +143,10 @@ function Post({username,caption,comments,code,language,like,id,originName,savePo
 
     function deletePost(){
         if(myPseudo===undefined){
-            Axios.delete("http://192.168.1.82:8080/api/posts/"+id);
+            Axios.delete("http://141.94.245.122:8081/api/posts/"+id);
             window.location.reload(false);
         }else{
-            Axios.delete("http://192.168.1.82:8080/api/SavePosts/"+savePostId);
+            Axios.delete("http://141.94.245.122:8081/api/SavePosts/"+savePostId);
             window.location.reload(false);
         }
 
